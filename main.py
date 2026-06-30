@@ -1,6 +1,5 @@
 
 import pandas as pd
-import requests
 import time
 import json
 import os
@@ -16,7 +15,6 @@ CACHE_FILE      = "cache_cep.json"
 COL_CEP         = "CEP"
 COL_CIDADE      = "NM_Cidade"
 COL_UF          = "ID_UF"
-TIMEOUT         = 10
 SALVAR_A_CADA   = 200
 # ──────────────────────────────────────────────
 
@@ -29,28 +27,7 @@ def normalizar(texto: str) -> str:
     return sem_acento.upper().strip()
 
 
-def carregar_cache() -> dict:
-    if os.path.exists(CACHE_FILE):
-        with open(CACHE_FILE, "r", encoding="utf-8") as f:
-            cache = json.load(f)
-        print(f"Cache carregado: {len(cache):,} CEPs ja consultados.")
-        return cache
-    return {}
-
-
-def salvar_cache(cache: dict):
-    with open(CACHE_FILE, "w", encoding="utf-8") as f:
-        json.dump(cache, f, ensure_ascii=False, indent=2)
-
-
-def _get(url):
-    try:
-        return requests.get(url, timeout=TIMEOUT)
-    except requests.exceptions.RequestException:
-        return None
-
-
-def consultar_api(cep: str):
+async def consultar_api(cep: str):
     """
     Tenta BrasilAPI -> ViaCEP -> OpenCEP.
     Retorna dict com localidade/uf, None (CEP invalido) ou "TIMEOUT".

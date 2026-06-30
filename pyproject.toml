@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "cep-validation"
+version = "0.1.0"
+description = "Validador de CEP via APIs"
+authors = ["Jean-V0 <jeanvdsroqu@gmail.com>", "matheusg40 <# O Matheus, bota seu email aqui depois>"]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.14"
+pandas = "^2.2.0"
+requests = "^2.34.0"
+openpyxl = "^3.1.0"
+python-dotenv = "^1.0.1"
+
+[build-system]
+requires = ["poetry-core>=2.4.0"]
+build-backend = "poetry.core.masonry.api"
